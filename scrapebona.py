@@ -3,6 +3,7 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup as soup
 import pandas as pd
 import lxml
+import re
 import pdb
 
 csvfile = 'BonaIngredients.csv'
@@ -10,8 +11,8 @@ theaders = pd.DataFrame({'product page URL':[],
                          'product name':[] ,
                          'product code':[] ,
                          'ingredient':[] ,
-                         'CAS#':[] ,
-                         'function':[]})
+                         'function':[] ,
+                         'CAS#':[]})
 theaders.to_csv(csvfile,header=True,index=False)
 
 
@@ -60,6 +61,21 @@ def get_accordians(url_page,url):
         ingredients_df.to_csv(csvfile, mode = 'a', header=False, index=False)
     
 
+# def get_ingredient_function(description):
+#     desc_no_newline = description.replace('\n'," ")
+#     if desc_no_newline.find("is a "):
+#         start = desc_no_newline.find("is a ") + 5
+#         end = desc_no_newline.find(".") + 1
+#         return desc_no_newline[start:end]
+#     elif desc_no_newline.find("acts as a"):
+#         start = desc_no_newline.find("acts as a ") + 10
+#         end = desc_no_newline.find(".")
+#         return desc_no_newline[start:end]
+#     else:
+#         return description
+    
+
+    
 main_url = 'https://us.bona.com/products.html'
 page = page_soup(main_url)
 prod_type_url = prod_urls(page,"product-line__products clearfix")
