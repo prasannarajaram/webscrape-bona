@@ -45,6 +45,7 @@ def get_accordians(url_page,url):
     ingredients = []
     ingredients_df = pd.DataFrame()
     for item in accordian_items:
+        # pdb.set_trace()
         accordian_title = item.find(class_="accordion__title").text.strip()
         accordian_content = item.find(class_="accordion__content").find_all('p')
         ingre_row = []
@@ -58,7 +59,7 @@ def get_accordians(url_page,url):
             ingre_row.append(desc)
         ingredients.append(ingre_row)
         ingredients_df = pd.DataFrame(ingredients)
-        ingredients_df.to_csv(csvfile, mode = 'a', header=False, index=False)
+    ingredients_df.to_csv(csvfile, mode = 'a', header=False, index=False)
     
 
 # def get_ingredient_function(description):
@@ -79,7 +80,7 @@ def get_accordians(url_page,url):
 main_url = 'https://us.bona.com/products.html'
 page = page_soup(main_url)
 prod_type_url = prod_urls(page,"product-line__products clearfix")
-
+# pdb.set_trace()
 for url in prod_type_url:
     url_page = page_soup(url)
     get_accordians(url_page,url)
